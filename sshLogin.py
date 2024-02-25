@@ -46,6 +46,10 @@ class SSHLoginApp:
         self.login_button = tk.Button(self.frame, text="Connect", command=self.connect_ssh, bg='#4A4A4A', fg=m1c)
         self.login_button.grid(row=4, columnspan=2, pady=10)
 
+        # Refresh Button
+        self.refresh_button = tk.Button(self.frame, text="Refresh", command=self.clear_entry, bg='#4A4A4A', fg=m1c)
+        self.refresh_button.grid(row=4, pady=10)
+
         self.commands_label = tk.Label(self.frame, text="Command Output:", bg=bgc, fg=m1c)
         self.commands_label.grid(row=5, columnspan=2, pady=5)
         self.output_listbox = tk.Listbox(self.frame, bg='#A4A4A4', fg=m1c, width=60, height=10)
@@ -60,6 +64,13 @@ class SSHLoginApp:
         self.status_desc.pack(side=tk.BOTTOM, fill=tk.X)
         self.status_separator = tk.Label(self.root, text="#################################################", fg='#A9A9A9', bd=2)
         self.status_separator.pack(side=tk.BOTTOM, fill=tk.X)
+
+    def clear_entry(self):
+        self.pass_entry.delete(0, tk.END)
+        self.user_entry.delete(0, tk.END)
+        self.port_entry.delete(0, tk.END)
+        self.host_entry.delete(0, tk.END)
+        self.output_listbox.delete(0, tk.END)
 
     def connect_ssh(self):
         host = self.host_entry.get()
@@ -87,6 +98,7 @@ class SSHLoginApp:
             self.output_listbox.insert(tk.END, f"SSH error: {e}")
         finally:
             ssh_client.close()
+  
 
 def main():
     root = tk.Tk()
